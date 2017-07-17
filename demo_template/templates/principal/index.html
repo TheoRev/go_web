@@ -1,0 +1,47 @@
+{{define "index"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Index</title>
+</head>
+
+<body>
+    {{template "header"}}
+    <!-- <h3>Hola {{.UserName}}.</h3> -->
+    <!-- <p>Edad: {{.Edad}}</p> -->
+
+    <p>Tags</p>
+    <ul>
+        {{range .Tags}}
+        <li>{{.}}</li>
+        {{end}}
+    </ul>
+    <hr>
+    <p>Cursos</p>
+    <ul>
+        {{range .Cursos}}
+        <li>El curso: {{.Nombre}}, {{.Duracion}}</li>
+        {{end}}
+    </ul>
+
+    {{template "footer"}}
+    <!-- 
+    {{if .Activo}}
+    <p>El usuario esta activo en la plataforma.</p>
+    {{else}}
+    <p>El usuario NO esta activo en la plataforma.</p>
+    {{end}}
+    <hr> {{if (or .Activo .Admin)}}
+    <p>Eres administrador.</p>
+    {{end}}
+    <hr> {{if (ge .Edad 25)}}
+    <p>El usuario tiene mas de 25 años.</p>
+    {{end}} -->
+</body>
+
+</html>
+{{end}}
