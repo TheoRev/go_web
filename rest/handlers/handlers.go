@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -12,33 +11,33 @@ import (
 
 // GetUsers Se obtiene todos los usuarios
 func GetUsers(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Se obtiene todos los usuarios!")
+	models.SendData(w, models.GetUsers())
 }
 
 // GetUser Se obtiene un usuario
 func GetUser(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-type", "application/json")
 	vars := mux.Vars(r)
 	userId, _ := strconv.Atoi(vars["id"])
 
-	response := models.GetDefaultResponse()
-	user, err := models.GetUser(userId)
-	if err != nil {
-		w.WriteHeader(http.StatusNotFound)
-		response.NotFound(err.Error)
+	if user, err := models.GetUser(userId); err != nil {
+		models.SendNotFound(w)
 	} else {
-		response.Data = user
+		models.SendData(w, user)
 	}
-
-	output, _ := json.Marshal(&response)
-
-	// fmt.Fprintf(w, "Se obtiene un usuario!")
-	fmt.Fprintf(w, string(output))
 }
 
 // CreateUser Se crea un usuario
 func CreateUser(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Se crea un usuario!")
+	user := models.User{}
+	// decoder := json.NewDecoder(r.Body)
+
+	fmt.Fprintf(w, user.Username)
+
+	// if err := decoder.Decode(&user); err != nil {
+	// 	models.SendUnprocessableEntity(w)
+	// } else {
+	// 	models.SendData(w, models.SaveUser(user))
+	// }
 }
 
 // UpdateUser Se actualiza un usuario
